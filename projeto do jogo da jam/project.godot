@@ -17,7 +17,7 @@ _global_script_class_icons={
 
 config/name="projeto do jogo da jam"
 run/main_scene="res://Node2D.tscn"
-config/icon="res://icon.png"
+config/icon="res://icom.png"
 
 [rendering]
 
