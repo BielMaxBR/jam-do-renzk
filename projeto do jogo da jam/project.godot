@@ -16,8 +16,8 @@ _global_script_class_icons={
 [application]
 
 config/name="projeto do jogo da jam"
-run/main_scene="res://Node2D.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://scenes/Cenario/Node2D.tscn"
+config/icon="res://sprites/icon.png"
 
 [rendering]
 
