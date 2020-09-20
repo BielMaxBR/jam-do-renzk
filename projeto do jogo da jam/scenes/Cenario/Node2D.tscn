@@ -1,3 +1,32 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/main.gd" type="Script" id=2]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 480, 322 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="HUD"]
+modulate = Color( 0.976471, 1, 0, 1 )
+anchor_left = 0.006
+anchor_top = 0.018
+anchor_right = 0.096
+anchor_bottom = 0.05
+margin_left = -0.470935
+margin_top = 0.212428
+margin_right = 0.369064
+margin_bottom = 0.0124283
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+max_value = 3.0
+value = 3.0
+rounded = true
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
