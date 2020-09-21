@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="projeto do jogo da jam"
-run/main_scene="res://scenes/Cenario/Node2D.tscn"
+run/main_scene="res://scenes/Cenario/main.tscn"
 config/icon="res://sprites/icon.png"
 
 [input]
@@ -50,6 +50,28 @@ dash={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="jogador"
+2d_physics/layer_2="inimigos"
+2d_physics/layer_3="paredes"
+2d_physics/layer_4="xx"
+2d_physics/layer_5="xx"
+2d_physics/layer_6="hit_box_jogador"
+2d_physics/layer_7="hit_box_inimigo"
+2d_physics/layer_8="ataque_jogador"
+2d_physics/layer_9="ataque_inimigo"
+2d_physics/layer_10="projetil_inimigo"
+
+[physics]
+
+2d/default_gravity=0
 
 [rendering]
 
