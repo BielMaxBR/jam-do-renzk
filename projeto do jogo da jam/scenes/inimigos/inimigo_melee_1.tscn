@@ -4,10 +4,10 @@
 [ext_resource path="res://sprites/icon.png" type="Texture" id=2]
 [ext_resource path="res://scripts/inimigos/hit_boxes/hit_box_inimigo_melee_1.gd" type="Script" id=3]
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 6 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=2]
 resource_name = "ataque"
 length = 0.21
 step = 0.05
@@ -24,7 +24,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.5, 1 ), Vector2( 1.5, 0.5 ), Vector2( 0.5, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=3]
 resource_name = "warning"
 length = 0.41
 step = 0.05
@@ -44,7 +44,7 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 34, 32 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 16, 32 )
 
 [node name="inimigo_melee_1" type="KinematicBody2D"]
@@ -60,7 +60,7 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -6 )
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 
 [node name="warning" type="Sprite" parent="."]
 position = Vector2( 6.77626e-21, -71 )
@@ -68,8 +68,8 @@ scale = Vector2( 0.1, 0.2 )
 texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/ataque = SubResource( 6 )
-anims/warning = SubResource( 7 )
+anims/ataque = SubResource( 2 )
+anims/warning = SubResource( 3 )
 
 [node name="cadencia_ataque" type="Timer" parent="."]
 
@@ -89,6 +89,6 @@ collision_mask = 0
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 [connection signal="timeout" from="cadencia_ataque" to="." method="_on_cadencia_ataque_timeout"]
 [connection signal="area_entered" from="area_ataque" to="." method="_on_area_ataque_area_entered"]

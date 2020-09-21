@@ -6,6 +6,7 @@ var pode_ataque = true #cadenciador de ataques
 var cadencia_ataques = 1.0 #tempo entre cada ataque
 var dano = 10 #dano infligido por esse inimigo
 
+signal morreu
 
 func _ready():
 	$"area_ataque/CollisionShape2D".disabled = true
@@ -52,4 +53,5 @@ func inimigo_acertado(saude):
 
 func inimigo_morto(saude):
 	print("inimigo morto ", saude)
+	emit_signal("morreu")
 	self.queue_free()

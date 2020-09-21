@@ -1,9 +1,9 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export var MaxOndas = 3
+export var MaxInimigos = 2
+var ondaAtual = 0
+var InimigosSobraram = 0
 
 
 # Called when the node enters the scene tree for the first time.
