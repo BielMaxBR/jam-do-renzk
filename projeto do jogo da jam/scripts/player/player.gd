@@ -4,9 +4,10 @@ export onready var tween = get_node("Tween")
 onready var dad = get_node("../")
 export var stamina = 3
 var direcao = Vector2()
-var velocidade = 250
+var velocidade = 125
 var pode_controlar = true
 var ataqueDict = {}
+var FixedComboIndex = -1
 export var comboIndex = 0
 var pode_ataque = true
 var cadencia_ataque = 0.2
@@ -17,10 +18,10 @@ var dano = 30
 func _ready():
 	print(dad)
 	$"StaminaTimer".start()
-	for ataque in $ataques.get_child_count():
-		ataqueDict[ataque] = $ataques.get_child(ataque)
-
-	comboIndex = $ataques.get_child_count()
+	for ataque in $ataques.get_children():
+		if ataque is Area2D:
+			FixedComboIndex += 1
+			ataqueDict[FixedComboIndex] = ataque
 
 
 # warning-ignore:unused_argument
@@ -46,7 +47,7 @@ func get_movement_input():
 
 func dash():
 	tween.interpolate_method(self, "move_and_slide",
-	Vector2(0,0) + ((get_global_mouse_position() - self.global_position).normalized() * 1800), global_position.normalized(), 2,
+	Vector2(0,0) + ((get_global_mouse_position() - self.global_position).normalized() * 900), global_position.normalized(), 2,
 	Tween.TRANS_QUINT, Tween.EASE_OUT_IN)
 	tween.start()
 	pass
@@ -60,15 +61,15 @@ func avanco():
 
 func movement():
 	get_movement_input()
-	if global_position.x > 1024:
-		global_position.x = 0
-	if global_position.x < 0:
-		global_position.x = 1024
+	#if global_position.x > 1024:
+	#	global_position.x = 0
+	#if global_position.x < 0:
+	#	global_position.x = 1024
 	
-	if global_position.y > 600:
-		global_position.y = 0
-	if global_position.y < 0:
-		global_position.y = 600
+	#if global_position.y > 600:
+	#	global_position.y = 0
+	#if global_position.y < 0:
+	#	global_position.y = 600
 	if pode_controlar:
 		# warning-ignore:return_value_discarded
 		move_and_slide(direcao * velocidade)
@@ -81,7 +82,7 @@ func ataque():
 		if comboIndex > 0 and not $ComboTimer.is_stopped():
 			
 			var ataqueAtual = ataqueDict[comboIndex-1]
-			var colisor = ataqueAtual.get_child(1)
+			var colisor = ataqueAtual.get_child(0)
 			var anim = $AnimationPlayer
 
 			colisor.disabled = false
@@ -137,5 +138,5 @@ func _on_area_ataque_area_entered(area):
 
 
 func _on_ComboTimer_timeout():
-	comboIndex = $ataques.get_child_count()
+	comboIndex = FixedComboIndex
 	pass # Replace with function body.

@@ -6,7 +6,7 @@
 [ext_resource path="res://scripts/inimigos/hit_boxes/hit_box_inimigo.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 8 )
+extents = Vector2( 16, 9.10088 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 16, 32 )

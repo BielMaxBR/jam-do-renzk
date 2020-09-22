@@ -19,6 +19,10 @@ config/name="projeto do jogo da jam"
 run/main_scene="res://scenes/Cenario/main.tscn"
 config/icon="res://sprites/icon.png"
 
+[display]
+
+window/vsync/use_vsync=false
+
 [input]
 
 ui_left={
