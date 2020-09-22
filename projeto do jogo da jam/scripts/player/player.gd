@@ -7,7 +7,7 @@ var direcao = Vector2()
 var velocidade = 250
 var pode_controlar = true
 var ataqueDict = {}
-var comboIndex = 0
+export var comboIndex = 0
 var pode_ataque = true
 var cadencia_ataque = 0.2
 
@@ -46,29 +46,29 @@ func get_movement_input():
 
 func dash():
 	tween.interpolate_method(self, "move_and_slide",
-	Vector2(0,0) + (get_local_mouse_position().normalized() * 1800), position.normalized(), 2,
+	Vector2(0,0) + ((get_global_mouse_position() - self.global_position).normalized() * 1800), global_position.normalized(), 2,
 	Tween.TRANS_QUINT, Tween.EASE_OUT_IN)
 	tween.start()
 	pass
 
 func avanco():
 	tween.interpolate_method(self, "move_and_slide",
-	Vector2(0,0) + (get_local_mouse_position().normalized() * 300), position.normalized(), 1,
+	Vector2(0,0) + (get_global_mouse_position().normalized() * 300), global_position.normalized(), 1,
 	Tween.TRANS_QUINT, Tween.EASE_OUT_IN)
 	tween.start()
 	pass
 
 func movement():
 	get_movement_input()
-	if position.x > 1024:
-		position.x = 0
-	if position.x < 0:
-		position.x = 1024
+	if global_position.x > 1024:
+		global_position.x = 0
+	if global_position.x < 0:
+		global_position.x = 1024
 	
-	if position.y > 600:
-		position.y = 0
-	if position.y < 0:
-		position.y = 600
+	if global_position.y > 600:
+		global_position.y = 0
+	if global_position.y < 0:
+		global_position.y = 600
 	if pode_controlar:
 		# warning-ignore:return_value_discarded
 		move_and_slide(direcao * velocidade)
@@ -87,7 +87,7 @@ func ataque():
 			colisor.disabled = false
 			pode_ataque = false
 			comboIndex -= 1
-			avanco()
+			#avanco()
 			$AtackTimer.start(cadencia_ataque)
 			anim.play("ataque_teste")
 			$ComboTimer.start()
@@ -110,11 +110,13 @@ func _on_Timer_timeout():
 
 func _on_Tween_tween_all_completed():
 	pode_controlar = true
+	$hit_box/CollisionShape2D.disabled = false
 	pass # Replace with function body.
 
 
 func _on_Tween_tween_started(object, key):
 	pode_controlar = false
+	$hit_box/CollisionShape2D.disabled = true
 	pass # Replace with function body.
 
 

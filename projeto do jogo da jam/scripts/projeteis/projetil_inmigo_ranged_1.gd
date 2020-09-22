@@ -15,5 +15,6 @@ func _process(delta):
 func _on_projetil_inimigo_ranged_1_area_entered(area):
 	if area.has_method("hit"):
 		area.hit(dano)
+		queue_free()
 	else:
 		queue_free()

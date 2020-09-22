@@ -8,6 +8,7 @@ var dano = 10 #dano infligido por esse inimigo
 
 signal morreu
 
+
 func _ready():
 	$"area_ataque/CollisionShape2D".disabled = true
 	$"hit_box/CollisionShape2D".disabled = false
@@ -47,11 +48,11 @@ func _on_area_ataque_area_entered(area):
 	area.hit(dano)
 
 
-func inimigo_acertado(saude):
-	print("inimigo acertado ", saude)
+func inimigo_acertado(param_saude):
+	print("inimigo acertado ", param_saude)
 
 
-func inimigo_morto(saude):
-	print("inimigo morto ", saude)
+func inimigo_morto(param_saude):
+	print("inimigo morto ", param_saude)
 	emit_signal("morreu")
 	self.queue_free()

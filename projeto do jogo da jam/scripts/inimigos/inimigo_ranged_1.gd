@@ -7,6 +7,9 @@ var cadencia_ataques = 2.0 #tempo entre cada ataque
 var dano = 10 #dano infligido por esse inimigo
 var pre_projetil = preload("res://scenes/projeteis/projetil_inmigo_ranged_1.tscn")
 
+signal morreu
+
+
 func _ready():
 	$"hit_box/CollisionShape2D".disabled = false
 
@@ -27,7 +30,7 @@ func movimento_avanco():
 func tiro():
 	if pode_atirar:
 		pode_atirar = false
-		$"AnimationPlayer".play("warning")
+		$"AnimationPlayer".play("aviso_ataque_piscada")
 		yield($"AnimationPlayer", "animation_finished")
 		
 		$"AnimationPlayer".play("tiro")
@@ -58,4 +61,5 @@ func inimigo_acertado():
 
 func inimigo_morto():
 	print("inimigo morto")
+	emit_signal("morreu")
 	self.queue_free()

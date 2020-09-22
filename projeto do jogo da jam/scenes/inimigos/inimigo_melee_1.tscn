@@ -3,6 +3,7 @@
 [ext_resource path="res://scripts/inimigos/inimigo_melee_1.gd" type="Script" id=1]
 [ext_resource path="res://sprites/icon.png" type="Texture" id=2]
 [ext_resource path="res://scripts/inimigos/hit_boxes/hit_box_inimigo_melee_1.gd" type="Script" id=3]
+[ext_resource path="res://animations/aviso_ataque_piscada.tres" type="Animation" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 6 )
@@ -24,27 +25,10 @@ tracks/0/keys = {
 "values": [ Vector2( 0.5, 1 ), Vector2( 1.5, 0.5 ), Vector2( 0.5, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "warning"
-length = 0.41
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("warning:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ true, false, true, false, true, false, true, false, true ]
-}
-
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 34, 32 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 16, 32 )
 
 [node name="inimigo_melee_1" type="KinematicBody2D"]
@@ -63,13 +47,14 @@ position = Vector2( 0, -6 )
 shape = SubResource( 1 )
 
 [node name="warning" type="Sprite" parent="."]
-position = Vector2( 6.77626e-21, -71 )
+visible = false
+position = Vector2( 0, -72 )
 scale = Vector2( 0.1, 0.2 )
 texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/ataque = SubResource( 2 )
-anims/warning = SubResource( 3 )
+anims/aviso_ataque_piscada = ExtResource( 4 )
 
 [node name="cadencia_ataque" type="Timer" parent="."]
 
@@ -80,7 +65,7 @@ collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="area_ataque"]
 position = Vector2( 18, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="hit_box" type="Area2D" parent="."]
 position = Vector2( 0, -32 )
@@ -89,6 +74,6 @@ collision_mask = 0
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 [connection signal="timeout" from="cadencia_ataque" to="." method="_on_cadencia_ataque_timeout"]
 [connection signal="area_entered" from="area_ataque" to="." method="_on_area_ataque_area_entered"]
