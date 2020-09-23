@@ -72,7 +72,7 @@ func ataque():
 	if pode_ataque:
 		$"arma/area_ataque/colisao_area".disabled = false
 		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		move_and_slide(vetor_direcao*700)
+		move_and_slide(vetor_direcao*7000)
 		
 		emit_signal("recuo", vetor_direcao, forca_recuo, cadencia_ataque/2)
 		var efeito = pre_efeito.instance()
