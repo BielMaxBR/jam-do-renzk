@@ -72,7 +72,7 @@ func ataque():
 	if pode_ataque:
 		$"arma/area_ataque/colisao_area".disabled = false
 		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		move_and_slide(vetor_direcao*7000)
+		move_and_slide(vetor_direcao*700)
 		
 		emit_signal("recuo", vetor_direcao, forca_recuo, cadencia_ataque/2)
 		var efeito = pre_efeito.instance()
@@ -104,13 +104,13 @@ func _on_tween_dash_tween_all_completed():
 
 
 func jogador_acertado():
-	print("jogador_acertado")
-
+	#print("jogador_acertado")
+	pass
 
 func jogador_morto():
-	print("jogador_morto")
-
-
+	#print("jogador_morto")
+	pass
+	
 func _on_area_ataque_area_entered(area):
 	area.hit(dano) #se o jogador acertar o inimigo...
 

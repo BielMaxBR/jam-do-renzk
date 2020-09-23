@@ -38,10 +38,10 @@ func _on_area_contato_area_entered(area):
 
 
 func inimigo_acertado(param_saude):
-	print("inimigo_acertado, saude: ", param_saude)
-
+	#print("inimigo_acertado, saude: ", param_saude)
+	pass
 
 func inimigo_morto(param_saude):
-	print("inimigo_morto, saude: ", param_saude)
+	#print("inimigo_morto, saude: ", param_saude)
 	emit_signal("morreu")
 	queue_free()

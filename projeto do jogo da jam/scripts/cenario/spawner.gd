@@ -8,5 +8,6 @@ func _ready():
 	if inimigo != null:
 		self.get_parent().add_child(inimigo)
 	else:
-		print("variavel do spawn = null")
+		#print("variavel do spawn = null")
+		pass
 	self.queue_free()

@@ -56,10 +56,11 @@ func _on_area_ataque_area_entered(area):
 
 
 func inimigo_acertado():
-	print("inimigo acertado")
-
+	#print("inimigo acertado")
+	pass
 
 func inimigo_morto():
-	print("inimigo morto")
+	#print("inimigo morto")
+	
 	emit_signal("morreu")
 	self.queue_free()

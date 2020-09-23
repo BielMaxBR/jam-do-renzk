@@ -13,7 +13,7 @@ func _ready():
 func camera_zoom(param_zoom):
 	#pega o zoom atual e soma a quantidade determinada pelo script, a variavel distancia_zoom é modificada no script do jogador, se ativar mais de uma vez, os zooms irao se somar
 	var zoom_atual = self.zoom
-	$"tween_zoom".interpolate_property(self, "zoom", zoom_atual, zoom_atual + param_zoom, 0.3, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
+	$"tween_zoom".interpolate_property(self, "zoom", zoom_atual, zoom_atual + param_zoom, 0.1, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
 	$"tween_zoom".start()
 
 
