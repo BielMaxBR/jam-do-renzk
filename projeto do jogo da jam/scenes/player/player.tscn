@@ -1,199 +1,84 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/player/player.gd" type="Script" id=1]
-[ext_resource path="res://sprites/molde_personagem_chrono_cookies.png" type="Texture" id=2]
+[ext_resource path="res://sprites/personagem_chrono_cookies.png" type="Texture" id=2]
 [ext_resource path="res://scripts/player/hit_box_player.gd" type="Script" id=3]
-[ext_resource path="res://scripts/player/attack_area.gd" type="Script" id=4]
+[ext_resource path="res://scenes/player/camera_jogador.tscn" type="PackedScene" id=4]
 [ext_resource path="res://sprites/espada_personagem.png" type="Texture" id=5]
-[ext_resource path="res://sprites/ataque_melee_1.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12.2906, 5.53723 )
+extents = Vector2( 7, 2 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 12.0056, 12.2471 )
+extents = Vector2( 9, 14 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "ataque_teste"
-length = 0.1
-step = 0.005
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = false
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 0.594604 ),
-"update": 0,
-"values": [ Color( 0.196078, 0, 1, 1 ), Color( 0.796078, 0.796078, 0.796078, 1 ) ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath("ataques/ataque")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "", false ],
-"method": "attack"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("ataques/ataque:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-
-[sub_resource type="CapsuleShape2D" id=4]
-radius = 14.8525
-height = 14.9431
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 6 )
-region = Rect2( 320, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 6 )
-region = Rect2( 256, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 6 )
-region = Rect2( 192, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 6 )
-region = Rect2( 128, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 6 )
-region = Rect2( 64, 0, 64, 64 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=11]
-animations = [ {
-"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), null ],
-"loop": false,
-"name": "attack",
-"speed": 100.0
-} ]
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 24.0
 
 [node name="player" type="KinematicBody2D"]
-collision_mask = 6
+collision_mask = 4
 script = ExtResource( 1 )
 
-[node name="StaminaTimer" type="Timer" parent="."]
-wait_time = 0.8
-autostart = true
-
-[node name="AtackTimer" type="Timer" parent="."]
-wait_time = 0.2
-
-[node name="ComboTimer" type="Timer" parent="."]
-wait_time = 0.5
+[node name="camera_jogador" parent="." instance=ExtResource( 4 )]
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.796078, 0.796078, 0.796078, 1 )
-position = Vector2( 0, -12 )
+position = Vector2( 0, -16 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 5, 0, 17, 24 )
+region_rect = Rect2( 8, 0, 19, 32 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0, -6 )
+[node name="colisao_pes" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -1 )
 shape = SubResource( 1 )
 
-[node name="Tween" type="Tween" parent="."]
-playback_speed = 10.0
-playback/speed = 10.0
+[node name="stamina_timer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="cadencia_ataque" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="hit_box" type="Area2D" parent="."]
-visible = false
-position = Vector2( 0, -12 )
+position = Vector2( 0, -14 )
 collision_layer = 32
 collision_mask = 0
 script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
+[node name="colisao_hit_box" type="CollisionShape2D" parent="hit_box"]
 shape = SubResource( 2 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/ataque_teste = SubResource( 3 )
-
-[node name="ataques" type="Node2D" parent="."]
+[node name="arma" type="Node2D" parent="."]
 position = Vector2( 0, -12 )
 
-[node name="ataque1" type="Area2D" parent="ataques" groups=[
-"ataques",
-]]
-collision_layer = 128
-collision_mask = 64
-script = ExtResource( 4 )
-dano = 100
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ataques/ataque1"]
-position = Vector2( 15, 0 )
-rotation = 1.5708
-shape = SubResource( 4 )
-disabled = true
-
-[node name="ataque2" type="Area2D" parent="ataques" groups=[
-"ataques",
-]]
-collision_layer = 128
-collision_mask = 64
-script = ExtResource( 4 )
-dano = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ataques/ataque2"]
-position = Vector2( 15, 0 )
-rotation = 1.5708
-shape = SubResource( 4 )
-disabled = true
-
-[node name="ataque3" type="Area2D" parent="ataques" groups=[
-"ataques",
-]]
-collision_layer = 128
-collision_mask = 64
-script = ExtResource( 4 )
-dano = 17
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ataques/ataque3"]
-position = Vector2( 15, 0 )
-rotation = 1.5708
-shape = SubResource( 4 )
-disabled = true
-
-[node name="ataque" type="AnimatedSprite" parent="ataques"]
-position = Vector2( 5.5559, 0.0944901 )
-scale = Vector2( 1, 0.52 )
-frames = SubResource( 11 )
-animation = "attack"
-
-[node name="Espadinha" type="Sprite" parent="ataques"]
-position = Vector2( 1.31799, 1.18687 )
-scale = Vector2( 0.808434, 0.702508 )
+[node name="espada" type="Sprite" parent="arma"]
+position = Vector2( 0, 4 )
+rotation = -2.61799
+scale = Vector2( 0.9, 0.8 )
 texture = ExtResource( 5 )
 centered = false
 offset = Vector2( -8, -12 )
-[connection signal="timeout" from="StaminaTimer" to="." method="_on_Timer_timeout"]
-[connection signal="timeout" from="AtackTimer" to="." method="_on_candencia_ataque_timeout"]
-[connection signal="timeout" from="ComboTimer" to="." method="_on_ComboTimer_timeout"]
-[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
-[connection signal="tween_started" from="Tween" to="." method="_on_Tween_tween_started"]
+
+[node name="area_ataque" type="Area2D" parent="arma"]
+collision_layer = 128
+collision_mask = 64
+
+[node name="colisao_area" type="CollisionShape2D" parent="arma/area_ataque"]
+position = Vector2( 16, 0 )
+rotation = 1.5708
+shape = SubResource( 3 )
+
+[node name="posicao_efeito" type="Position2D" parent="arma"]
+position = Vector2( 16, 0 )
+
+[node name="tween_dash" type="Tween" parent="."]
+playback_speed = 10.0
+playback/speed = 10.0
+
+[node name="tween_ataque" type="Tween" parent="."]
+[connection signal="timeout" from="stamina_timer" to="." method="_on_stamina_timer_timeout"]
+[connection signal="timeout" from="cadencia_ataque" to="." method="_on_cadencia_ataque_timeout"]
+[connection signal="area_entered" from="arma/area_ataque" to="." method="_on_area_ataque_area_entered"]
+[connection signal="tween_all_completed" from="tween_dash" to="." method="_on_tween_dash_tween_all_completed"]
+[connection signal="tween_started" from="tween_dash" to="." method="_on_tween_dash_tween_started"]
+[connection signal="tween_completed" from="tween_ataque" to="." method="_on_tween_ataque_tween_completed"]

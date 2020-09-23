@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://sprites/ataque_melee_1.png" type="Texture" id=1]
+[ext_resource path="res://animations/efeito_espada.tres" type="Animation" id=2]
+[ext_resource path="res://scripts/player/efeito_espada.gd" type="Script" id=3]
+
+[node name="efeito_espada" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/efeito_espada = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 13, 0 )
+scale = Vector2( 1, 0.8 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 5

@@ -23,7 +23,6 @@ func _process(delta):
 	$HUD/Stamina.value = $YSort/player.stamina
 	$HUD/InimigosSobram.text = str(InimigosSobraram) + "/" + str(MaxInimigos)
 	$HUD/Wave.text = "WAVE" + str(ondaAtual)
-	$HUD/comboTimer.text = str($YSort/player.comboIndex) + " / " + str($YSort/player/ComboTimer.time_left) 
 	if InimigosSobraram == 0:
 		InimigosSobraram = MaxInimigos
 		ProximaOnda()
@@ -35,7 +34,6 @@ func ProximaOnda():
 		for i in MaxInimigos:
 			var spawn = spawner.instance()
 			var inimigo = lista_inimigos[randi()%inimigos_possiveis].instance()
-#			var inimigo = inimigoPreload.instance()
 			inimigo.connect("morreu", self, "inimigo_morreu")
 			spawn.global_position  = Vector2(rand_range(10,1000),rand_range(10,550))
 			inimigo.global_position = spawn.global_position

@@ -30,7 +30,8 @@ func movimento_avanco():
 func ataque():
 	if pode_ataque:
 		pode_ataque = false
-		$"AnimationPlayer".play("warning")
+		$"area_ataque".look_at(alvo.global_position + Vector2(0, -12)) #+altura do sprite, pra mirar pro meio dele
+		$"AnimationPlayer".play("aviso_ataque_piscada")
 		yield($"AnimationPlayer", "animation_finished")
 		$"AnimationPlayer".play("ataque")
 		$"area_ataque".look_at(alvo.global_position + Vector2(0, -32)) #+altura do sprite, pra mirar pro meio dele
