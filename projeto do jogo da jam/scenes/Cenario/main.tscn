@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/cenario/main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://sprites/tiles/tile_chao_estagio 2.png" type="Texture" id=3]
 [ext_resource path="res://sprites/player_entre_aspas.png" type="Texture" id=4]
 [ext_resource path="res://sprites/tiles/tile.png" type="Texture" id=5]
+[ext_resource path="res://scenes/Cenario/poste.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tile_chao_estagio 2.png 0"
@@ -391,3 +392,50 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 polygon = PoolVector2Array( 2.07361, -118.119, 1144.23, -118.119, 1140, 715, -86, 710, -91, -119, -18, -119, -21, 624, 1052, 629, 1052.47, -35.4184, 6.38348, -45.1585 )
+
+[node name="postes" type="Position2D" parent="."]
+
+[node name="poste" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( -16, 24.786 )
+
+[node name="poste2" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 528, 31 )
+
+[node name="poste3" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 1016, 31 )
+
+[node name="poste4" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 528, 360 )
+
+[node name="poste5" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( -24, 352 )
+
+[node name="poste6" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 1024, 360 )
+
+[node name="poste7" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 536, 616 )
+
+[node name="poste8" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( -16, 608 )
+
+[node name="poste9" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 1032, 616 )
+
+[node name="poste10" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 784, 360 )
+
+[node name="poste11" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 232, 352 )
+
+[node name="poste12" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 782.532, 18.7859 )
+
+[node name="poste13" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 230.532, 10.7859 )
+
+[node name="poste14" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 798.532, 632 )
+
+[node name="poste15" parent="postes" instance=ExtResource( 6 )]
+position = Vector2( 246.532, 624 )

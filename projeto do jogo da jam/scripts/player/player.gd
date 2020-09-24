@@ -42,7 +42,10 @@ func _process(delta):
 	movement()
 	$"arma".look_at(get_global_mouse_position()) #mira a arma sempre pro mouse
 	if Input.is_action_just_pressed("attack"):
+		avanco()
 		ataque()
+		
+
 
 
 func get_movement_input():
@@ -51,6 +54,7 @@ func get_movement_input():
 	direcao = direcao.normalized()
 	if Input.is_action_just_pressed("dash") and stamina > 0:
 		dash()
+		
 		stamina -= 1
 
 
@@ -67,13 +71,16 @@ func movement():
 		# warning-ignore:return_value_discarded
 		move_and_slide(direcao * velocidade)
 
+func avanco():
+	var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
+	tween.interpolate_method(self, "move_and_slide",
+	vetor_direcao*600, global_position.normalized(), 1)
+	tween.start()
 
 func ataque():
 	if pode_ataque:
 		$"arma/area_ataque/colisao_area".disabled = false
 		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		move_and_slide(vetor_direcao*7000)
-		
 		emit_signal("recuo", vetor_direcao, forca_recuo, cadencia_ataque/2)
 		var efeito = pre_efeito.instance()
 		efeito.global_position = $"arma/posicao_efeito".global_position
