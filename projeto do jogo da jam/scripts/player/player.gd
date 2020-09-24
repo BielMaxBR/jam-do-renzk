@@ -1,5 +1,5 @@
 extends KinematicBody2D
-#sistema de variacao de animacoes no ataque
+#sistema de variacao de animacoes no ataque, impulsao no jogador qnd atacar
 
 export onready var tween = get_node("tween_dash")
 onready var dad = get_node("../")
@@ -13,7 +13,7 @@ export var comboIndex = 0
 var pode_ataque = true
 var cadencia_ataque = 0.15
 
-var forca_recuo = 10
+var forca_recuo = 60
 var zoom_hit = Vector2(0.05, 0.05)
 
 var dano = 30
@@ -36,23 +36,28 @@ func _ready():
 # warning-ignore:unused_argument
 func _process(delta):
 	if (get_global_mouse_position() - self.global_position).x >= 0:
-		$"Sprite".flip_h = false
+		$"sprite_personagem".flip_h = false
 	else:
-		$"Sprite".flip_h = true
-	
+		$"sprite_personagem".flip_h = true
 	movement()
 	$"arma".look_at(get_global_mouse_position()) #mira a arma sempre pro mouse
-	
 	if Input.is_action_just_pressed("attack"):
+		avanco()
 		ataque()
-		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		move_and_slide(vetor_direcao*7000)
+		
+
 
 
 func get_movement_input():
 	direcao.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	direcao.y =  Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up") 
 	direcao = direcao.normalized()
+	
+	if direcao != Vector2():
+		$"AnimationPlayer".play("corrida_jogador")
+	else:
+		$"AnimationPlayer".play("idle_personagem")
+	
 	if Input.is_action_just_pressed("dash") and stamina > 0:
 		dash()
 		stamina -= 1
@@ -71,12 +76,16 @@ func movement():
 		# warning-ignore:return_value_discarded
 		move_and_slide(direcao * velocidade)
 
+func avanco():
+	var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
+	tween.interpolate_method(self, "move_and_slide",
+	vetor_direcao*200, global_position.normalized(), 1)
+	tween.start()
 
 func ataque():
 	if pode_ataque:
 		$"arma/area_ataque/colisao_area".disabled = false
 		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		
 		emit_signal("recuo", vetor_direcao, forca_recuo, cadencia_ataque/2)
 		var efeito = pre_efeito.instance()
 		efeito.global_position = $"arma/posicao_efeito".global_position

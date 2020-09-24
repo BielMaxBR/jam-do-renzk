@@ -15,7 +15,7 @@ func _ready():
 	$"Timer_avanco".one_shot = false
 	$"area_contato/CollisionShape2D".disabled = true
 	self.bounce = 0.0 #forca de ricochete
-	self.linear_damp = 1.0 #atrito com o chao
+	self.linear_damp = 0.2 #atrito com o chao
 	self.friction = 0.5 #atrio de arrasto com as paredes
 	$"hit_box".saude = saude
 

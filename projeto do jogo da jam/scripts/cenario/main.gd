@@ -19,6 +19,7 @@ func _ready():
 
 
 func _process(delta):
+	$HUD/comboTimer.text = str(Engine.get_frames_per_second())
 	$HUD/Vida.text = str($YSort/player/hit_box.saude)
 	$HUD/Stamina.value = $YSort/player.stamina
 	$HUD/InimigosSobram.text = str(InimigosSobraram) + "/" + str(MaxInimigos)
