@@ -1,5 +1,5 @@
 extends KinematicBody2D
-#sistema de variacao de animacoes no ataque, impulsao no jogador qnd atacar
+#sistema de variacao de animacoes no ataque
 
 export onready var tween = get_node("tween_dash")
 onready var dad = get_node("../")
@@ -39,10 +39,14 @@ func _process(delta):
 		$"Sprite".flip_h = false
 	else:
 		$"Sprite".flip_h = true
+	
 	movement()
 	$"arma".look_at(get_global_mouse_position()) #mira a arma sempre pro mouse
+	
 	if Input.is_action_just_pressed("attack"):
 		ataque()
+		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
+		move_and_slide(vetor_direcao*7000)
 
 
 func get_movement_input():
@@ -72,7 +76,6 @@ func ataque():
 	if pode_ataque:
 		$"arma/area_ataque/colisao_area".disabled = false
 		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		move_and_slide(vetor_direcao*7000)
 		
 		emit_signal("recuo", vetor_direcao, forca_recuo, cadencia_ataque/2)
 		var efeito = pre_efeito.instance()
