@@ -2,6 +2,7 @@ extends KinematicBody2D
 #sistema de variacao de animacoes no ataque, impulsao no jogador qnd atacar
 
 export onready var tween = get_node("tween_dash")
+onready var Pre_skill_Pause = preload("res://scenes/player/skills/projetil_pause.tscn")
 onready var dad = get_node("../")
 export var stamina = 3
 var direcao = Vector2()
@@ -32,7 +33,6 @@ func _ready():
 	$"stamina_timer".start()
 	$"arma/area_ataque/colisao_area".disabled = true
 
-
 # warning-ignore:unused_argument
 func _process(delta):
 	if (get_global_mouse_position() - self.global_position).x >= 0:
@@ -44,9 +44,8 @@ func _process(delta):
 	if Input.is_action_just_pressed("attack"):
 		avanco()
 		ataque()
-		
-
-
+	if Input.is_action_just_pressed("skill_1"):
+		skill(1)
 
 func get_movement_input():
 	direcao.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -62,6 +61,15 @@ func get_movement_input():
 		dash()
 		stamina -= 1
 
+func skill(slot):
+	if slot == 1:
+		var skill = Pre_skill_Pause.instance()
+		skill.global_position = get_global_position()
+		#skill.look_at(get_global_mouse_position())
+		skill.alvo = get_global_mouse_position() - (self.global_position+Vector2(0,-30))
+		get_parent().add_child(skill)
+	pass
+
 
 func dash():
 	tween.interpolate_method(self, "move_and_slide",
@@ -76,11 +84,13 @@ func movement():
 		# warning-ignore:return_value_discarded
 		move_and_slide(direcao * velocidade)
 
+
 func avanco():
 	var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
 	tween.interpolate_method(self, "move_and_slide",
 	vetor_direcao*200, global_position.normalized(), 1)
 	tween.start()
+
 
 func ataque():
 	if pode_ataque:
@@ -119,12 +129,15 @@ func jogador_acertado():
 	#print("jogador_acertado")
 	pass
 
+
 func jogador_morto():
 	#print("jogador_morto")
 	pass
-	
+
+
 func _on_area_ataque_area_entered(area):
-	area.hit(dano) #se o jogador acertar o inimigo...
+	if area.has_method("hit"):
+		area.hit(dano) #se o jogador acertar o inimigo...
 
 
 func _on_cadencia_ataque_timeout():

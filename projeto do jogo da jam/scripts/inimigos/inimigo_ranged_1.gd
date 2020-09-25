@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-var alvo = self #self apenas para n ficar Null e poder dar algum erro
-var velocidade = 75 #velocidade com q o inimigo se movimenta
-var pode_atirar = true #cadenciador de ataques
-var cadencia_ataques = 2.0 #tempo entre cada ataque
-var dano = 10 #dano infligido por esse inimigo
+var alvo = self # self apenas para n ficar Null e poder dar algum erro
+var velocidade = 75 # velocidade com q o inimigo se movimenta
+var pode_atirar = true # cadenciador de ataques
+var cadencia_ataques = 2.0 #t empo entre cada ataque
+export var dano = 10 #d ano infligido por esse inimigo
 var pre_projetil = preload("res://scenes/projeteis/projetil_inmigo_ranged_1.tscn")
 
 signal morreu
@@ -34,7 +34,7 @@ func tiro():
 		yield($"AnimationPlayer", "animation_finished")
 		
 		$"AnimationPlayer".play("tiro")
-		var mira = alvo.global_position + Vector2(0, -32) #+altura do sprite, pra mirar pro meio dele
+		var mira = alvo.global_position + Vector2(0, -12) #+altura do sprite, pra mirar pro meio dele
 		$"arma".look_at(mira)
 		
 		var projetil = pre_projetil.instance()

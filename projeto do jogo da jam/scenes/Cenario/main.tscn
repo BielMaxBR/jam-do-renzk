@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/cenario/main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/player_entre_aspas.png" type="Texture" id=4]
 [ext_resource path="res://sprites/tiles/tile.png" type="Texture" id=5]
 [ext_resource path="res://scenes/Cenario/poste.tscn" type="PackedScene" id=6]
+[ext_resource path="res://o sonho.ogg" type="AudioStream" id=7]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tile_chao_estagio 2.png 0"
@@ -376,16 +377,19 @@ anchor_left = 0.01
 anchor_top = 0.018
 anchor_right = 0.049
 anchor_bottom = 0.041
-margin_left = 0.118123
-margin_top = -0.0140429
-margin_right = 0.182121
-margin_bottom = 0.185957
+margin_left = -0.24
+margin_top = -2.8
+margin_right = 13.824
+margin_bottom = 0.4
+rect_scale = Vector2( 1.68, 1.6 )
 text = "vida"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Area2D" type="StaticBody2D" parent="."]
+[node name="Area2D" type="StaticBody2D" parent="." groups=[
+"o fim",
+]]
 visible = false
 collision_layer = 4
 collision_mask = 0
@@ -439,3 +443,8 @@ position = Vector2( 798.532, 632 )
 
 [node name="poste15" parent="postes" instance=ExtResource( 6 )]
 position = Vector2( 246.532, 624 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -3.0
+autoplay = true

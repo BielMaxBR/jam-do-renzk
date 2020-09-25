@@ -18,7 +18,7 @@ func camera_zoom(param_zoom):
 
 
 func camera_recuo(param_direcao, param_intensidade, param_duracao): 
-	print("oimfoiam")
+	#print("oimfoiam")
 	#pega a posicao original e soma a quantidade determinada pelo script, os parametros da direcao do deslocamento, a forca do deslocamento e a duracao serao passados como parametro no script do jogador
 	$"tween_recuo".interpolate_property(self, "position", posicao_padrao, posicao_padrao + (param_direcao * param_intensidade), param_duracao, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
 	$"tween_recuo".start()

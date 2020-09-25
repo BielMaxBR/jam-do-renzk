@@ -28,7 +28,9 @@ tracks/0/keys = {
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 32 )
 
-[node name="inimigo_ranged_1" type="KinematicBody2D"]
+[node name="inimigo_ranged_1" type="KinematicBody2D" groups=[
+"inimigos",
+]]
 collision_layer = 2
 collision_mask = 6
 script = ExtResource( 2 )
@@ -55,7 +57,9 @@ anims/tiro = SubResource( 2 )
 
 [node name="cadencia_tiro" type="Timer" parent="."]
 
-[node name="hit_box" type="Area2D" parent="."]
+[node name="hit_box" type="Area2D" parent="." groups=[
+"inimigos",
+]]
 position = Vector2( 0, -32 )
 collision_layer = 64
 collision_mask = 0

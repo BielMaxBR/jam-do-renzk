@@ -4,7 +4,7 @@ var alvo = self #self apenas para n ficar Null e poder dar algum erro
 var velocidade = 100 #velocidade com q o inimigo se movimenta
 var pode_ataque = true #cadenciador de ataques
 var cadencia_ataques = 1.0 #tempo entre cada ataque
-var dano = 10 #dano infligido por esse inimigo
+export var dano = 10 #dano infligido por esse inimigo
 
 signal morreu
 

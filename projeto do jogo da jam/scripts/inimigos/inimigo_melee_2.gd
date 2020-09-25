@@ -4,7 +4,7 @@ extends RigidBody2D
 var alvo = self
 var tempo_para_avanco = 3.0
 var velocidade = 1000
-var dano = 20
+export var dano = 20
 var saude = 100
 
 signal morreu

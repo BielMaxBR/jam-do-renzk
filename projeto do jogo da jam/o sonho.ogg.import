@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/o sonho.ogg-5b83b822897e9879f5136689e85899db.oggstr"
+
+[deps]
+
+source_file="res://o sonho.ogg"
+dest_files=[ "res://.import/o sonho.ogg-5b83b822897e9879f5136689e85899db.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
