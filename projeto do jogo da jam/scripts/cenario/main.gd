@@ -2,7 +2,7 @@ extends Node2D
 
 onready var spawner = preload("res://scenes/Cenario/spawner.tscn")
 onready var inimigoPreload = preload("res://scenes/inimigos/inimigo_melee_1.tscn")
-export var MaxOndas = 3
+export var MaxOndas = 5
 export var MaxInimigos = 2
 var ondaAtual = 0
 var InimigosSobraram = MaxInimigos
@@ -25,13 +25,15 @@ func _process(delta):
 	$HUD/InimigosSobram.text = str(InimigosSobraram) + "/" + str(MaxInimigos)
 	$HUD/Wave.text = "WAVE" + str(ondaAtual)
 	if InimigosSobraram == 0:
-		InimigosSobraram = MaxInimigos
 		ProximaOnda()
+		InimigosSobraram = MaxInimigos
 
 
 func ProximaOnda():
 	ondaAtual += 1
 	if ondaAtual <= MaxOndas:
+		if ondaAtual == 3 or ondaAtual == 5:
+			MaxInimigos += 2
 		for i in MaxInimigos:
 			var spawn = spawner.instance()
 			var inimigo = lista_inimigos[randi()%inimigos_possiveis].instance()

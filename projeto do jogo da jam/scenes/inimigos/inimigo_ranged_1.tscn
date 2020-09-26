@@ -1,32 +1,21 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://sprites/icon.png" type="Texture" id=1]
+[ext_resource path="res://sprites/inimigos/ranged_1/torreto_arma.png" type="Texture" id=1]
 [ext_resource path="res://scripts/inimigos/inimigo_ranged_1.gd" type="Script" id=2]
 [ext_resource path="res://scripts/inimigos/hit_boxes/hit_box_inimigo_ranged_1.gd" type="Script" id=3]
 [ext_resource path="res://animations/aviso_ataque_piscada.tres" type="Animation" id=4]
+[ext_resource path="res://sprites/inimigos/ranged_1/torreto.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16, 6 )
+extents = Vector2( 12.397, 5.2623 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "tiro"
 length = 0.21
 step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0.5, 1 ), Vector2( 1.5, 0.5 ), Vector2( 0.5, 1 ) ]
-}
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 16, 32 )
+extents = Vector2( 13.2809, 19.9209 )
 
 [node name="inimigo_ranged_1" type="KinematicBody2D" groups=[
 "inimigos",
@@ -36,20 +25,21 @@ collision_mask = 6
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 0, 0, 1 )
-position = Vector2( 0, -32 )
-scale = Vector2( 0.5, 1 )
-texture = ExtResource( 1 )
+position = Vector2( 0, -20 )
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 30, 40 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, -6 )
 shape = SubResource( 1 )
 
 [node name="warning" type="Sprite" parent="."]
-visible = false
-position = Vector2( 6.77626e-21, -71 )
-scale = Vector2( 0.1, 0.2 )
-texture = ExtResource( 1 )
+position = Vector2( 0, -20 )
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 30, 0, 30, 40 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/aviso_ataque_piscada = ExtResource( 4 )
@@ -60,20 +50,22 @@ anims/tiro = SubResource( 2 )
 [node name="hit_box" type="Area2D" parent="." groups=[
 "inimigos",
 ]]
+visible = false
 position = Vector2( 0, -32 )
 collision_layer = 64
 collision_mask = 0
 script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
+position = Vector2( 0.176781, 12.5512 )
 shape = SubResource( 3 )
 
 [node name="arma" type="Sprite" parent="."]
-position = Vector2( 0, -32 )
-scale = Vector2( 1, 0.1 )
+position = Vector2( 0, -18.9731 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -1 )
 
 [node name="Position2D" type="Position2D" parent="arma"]
-position = Vector2( 32, 0 )
+position = Vector2( 11.6554, 0.982155 )
 scale = Vector2( 1, 5 )
 [connection signal="timeout" from="cadencia_tiro" to="." method="_on_cadencia_tiro_timeout"]
