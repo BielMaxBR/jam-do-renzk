@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 export onready var tween = get_node("tween_dash")
 onready var Pre_skill_Pause = preload("res://scenes/player/skills/projetil_pause.tscn")
+onready var Pre_skill_PauseII = preload("res://scenes/player/skills/projetil_pauseII.tscn")
 onready var dad = get_node("../")
 export var stamina = 3
 var direcao = Vector2()
@@ -62,8 +63,14 @@ func get_movement_input():
 		stamina -= 1
 
 func skill(slot):
-	if slot == 1:
+	if slot == 0:
 		var skill = Pre_skill_Pause.instance()
+		skill.global_position = get_global_position()
+		#skill.look_at(get_global_mouse_position())
+		skill.alvo = get_global_mouse_position() - (self.global_position)
+		get_parent().add_child(skill)
+	if slot == 1:
+		var skill = Pre_skill_PauseII.instance()
 		skill.global_position = get_global_position()
 		#skill.look_at(get_global_mouse_position())
 		skill.alvo = get_global_mouse_position() - (self.global_position)
