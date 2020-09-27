@@ -9,6 +9,7 @@ var pre_projetil = preload("res://scenes/projeteis/projetil_inmigo_ranged_1.tscn
 
 signal morreu
 
+export var congelado = false
 
 func _ready():
 	$"hit_box/CollisionShape2D".disabled = false
@@ -16,10 +17,11 @@ func _ready():
 
 func _process(delta):
 	alvo = self.get_parent().get_node("player") #pega o jogador como alvo
-	if (alvo.global_position - self.global_position).length() >= 600: #distancia entre o jogador e o inimigo
-		movimento_avanco() #avanca pra cima do jogador
-	else:
-		tiro() #atira no jogador
+	if not congelado:
+		if (alvo.global_position - self.global_position).length() >= 600: #distancia entre o jogador e o inimigo
+			movimento_avanco() #avanca pra cima do jogador
+		else:
+			tiro() #atira no jogador
 
 
 func movimento_avanco():

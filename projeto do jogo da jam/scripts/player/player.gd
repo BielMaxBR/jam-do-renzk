@@ -66,7 +66,7 @@ func skill(slot):
 		var skill = Pre_skill_Pause.instance()
 		skill.global_position = get_global_position()
 		#skill.look_at(get_global_mouse_position())
-		skill.alvo = get_global_mouse_position() - (self.global_position+Vector2(0,-30))
+		skill.alvo = get_global_mouse_position() - (self.global_position)
 		get_parent().add_child(skill)
 	pass
 
