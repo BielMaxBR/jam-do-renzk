@@ -30,8 +30,17 @@ func _process(delta):
 func _on_Timer_avanco_timeout():
 	if not congelado:
 		var direcao = (alvo.global_position - self.global_position).normalized() * 500
-		$"Animation_Player".play("aviso_ataque_piscada")
-		yield($"Animation_Player", "animation_finished")
+		for i in range(0,5):
+			$"Sprite".play("parado")
+			yield($"Sprite", "animation_finished")
+		if direcao.normalized().x > direcao.normalized().y:
+			$Sprite.play("lateral")
+		else:
+			$Sprite.play("frontal")
+		if alvo.global_position.x > global_position.x:
+			$Sprite.flip_h = false
+		else:
+			$Sprite.flip_h = true
 		$"area_contato/CollisionShape2D".disabled = false
 		self.linear_velocity = direcao
 	#	self.apply_impulse(Vector2(), direcao * velocidade)
