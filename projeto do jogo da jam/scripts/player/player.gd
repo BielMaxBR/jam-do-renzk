@@ -4,6 +4,7 @@ extends KinematicBody2D
 export onready var tween = get_node("tween_dash")
 onready var Pre_skill_Pause = preload("res://scenes/player/skills/projetil_pause.tscn")
 onready var Pre_skill_PauseII = preload("res://scenes/player/skills/projetil_pauseII.tscn")
+onready var Pre_skill_PauseIII = preload("res://scenes/player/skills/projetil_pauseIII.tscn")
 onready var dad = get_node("../")
 export var stamina = 3
 var direcao = Vector2()
@@ -29,7 +30,9 @@ signal recuo
 signal zoom
 
 func _ready():
+# warning-ignore:return_value_discarded
 	self.connect("recuo", $"camera_jogador", "camera_recuo")
+# warning-ignore:return_value_discarded
 	self.connect("zoom", $"camera_jogador", "camera_zoom")
 	$"stamina_timer".start()
 	$"arma/area_ataque/colisao_area".disabled = true
@@ -46,7 +49,13 @@ func _process(delta):
 		avanco()
 		ataque()
 	if Input.is_action_just_pressed("skill_1"):
+		skill(0)
+	
+	if Input.is_action_just_pressed("skill_2"):
 		skill(1)
+
+	if Input.is_action_just_pressed("skill_3"):
+		skill(2)
 
 func get_movement_input():
 	direcao.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -66,14 +75,19 @@ func skill(slot):
 	if slot == 0:
 		var skill = Pre_skill_Pause.instance()
 		skill.global_position = get_global_position()
-		#skill.look_at(get_global_mouse_position())
+
 		skill.alvo = get_global_mouse_position() - (self.global_position)
 		get_parent().add_child(skill)
 	if slot == 1:
 		var skill = Pre_skill_PauseII.instance()
 		skill.global_position = get_global_position()
-		#skill.look_at(get_global_mouse_position())
+
 		skill.alvo = get_global_mouse_position() - (self.global_position)
+		get_parent().add_child(skill)
+	if slot == 2:
+		var skill = Pre_skill_PauseIII.instance()
+		skill.global_position = get_global_position()
+
 		get_parent().add_child(skill)
 	pass
 
@@ -122,6 +136,8 @@ func _on_stamina_timer_timeout():
 		stamina += 1 
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_tween_dash_tween_started(object, key):
 	pode_controlar = false
 	$hit_box/colisao_hit_box.disabled = true
@@ -151,5 +167,7 @@ func _on_cadencia_ataque_timeout():
 	pode_ataque = true
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_tween_ataque_tween_completed(object, key):
 	$"arma/area_ataque/colisao_area".disabled = true
