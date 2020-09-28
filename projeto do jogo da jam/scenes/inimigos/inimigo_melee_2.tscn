@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://sprites/icon.png" type="Texture" id=1]
 [ext_resource path="res://scripts/inimigos/inimigo_melee_2.gd" type="Script" id=2]
@@ -9,62 +9,65 @@
 [ext_resource path="res://sprites/inimigos/melee_2/frontal.png" type="Texture" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 6 )
 region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 5 )
-region = Rect2( 48, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 5 )
-region = Rect2( 72, 0, 24, 24 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 6 )
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 6 )
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 7 )
 region = Rect2( 24, 0, 24, 24 )
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=5]
 atlas = ExtResource( 7 )
+region = Rect2( 48, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 7 )
+region = Rect2( 72, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 5 )
 region = Rect2( 24, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 5 )
 region = Rect2( 48, 0, 24, 24 )
 
 [sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 5 )
 region = Rect2( 72, 0, 24, 24 )
 
 [sub_resource type="SpriteFrames" id=11]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
 "loop": true,
-"name": "lateral",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 5 ), SubResource( 6 ) ],
-"loop": false,
 "name": "parado",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
 "name": "frontal",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "lateral",
+"speed": 5.0
 } ]
+
+[sub_resource type="CircleShape2D" id=15]
+radius = 2.6513
 
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 16, 9.10088 )
@@ -87,8 +90,23 @@ script = ExtResource( 2 )
 position = Vector2( 0, -12.522 )
 frames = SubResource( 11 )
 animation = "parado"
-frame = 1
-playing = true
+
+[node name="apontador" type="Position2D" parent="Sprite"]
+rotation = -0.00968701
+
+[node name="ponta" type="Area2D" parent="Sprite/apontador"]
+position = Vector2( 21.3268, 1.824 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/apontador/ponta"]
+shape = SubResource( 15 )
+
+[node name="Lateral" type="Area2D" parent="Sprite"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Sprite/Lateral"]
+position = Vector2( 4.50714, 0 )
+scale = Vector2( 0.834832, 1 )
+polygon = PoolVector2Array( 14.1555, -14.38, 19.4872, -10.7319, 23.6964, -2.17317, 24.2576, 1.89575, 20.329, 8.77083, 14.2958, 11.1561, 13.8588, -13.6879, -21.7174, -14.1885, -27.1138, 12.6752, -33.9093, 9.33809, -36.1078, 2.9976, -29.7121, -10.1839, -21.7174, -13.8548 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8 )
@@ -125,5 +143,7 @@ script = ExtResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hit_box"]
 visible = false
 shape = SubResource( 14 )
+[connection signal="area_entered" from="Sprite/Lateral" to="." method="_on_Lateral_area_entered"]
+[connection signal="area_exited" from="Sprite/Lateral" to="." method="_on_Lateral_area_exited"]
 [connection signal="timeout" from="Timer_avanco" to="." method="_on_Timer_avanco_timeout"]
 [connection signal="area_entered" from="area_contato" to="." method="_on_area_contato_area_entered"]

@@ -1,23 +1,18 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/player/player.gd" type="Script" id=1]
 [ext_resource path="res://animations/corrida_jogador.tres" type="Animation" id=2]
 [ext_resource path="res://scripts/player/hit_box_player.gd" type="Script" id=3]
 [ext_resource path="res://scenes/player/camera_jogador.tscn" type="PackedScene" id=4]
-[ext_resource path="res://sprites/espada_personagem.png" type="Texture" id=5]
 [ext_resource path="res://animations/idle_personagem.tres" type="Animation" id=6]
 [ext_resource path="res://sprites/sprite_sheet_personagem.png" type="Texture" id=7]
 [ext_resource path="res://sprites/sombra_personagem.png" type="Texture" id=8]
-[ext_resource path="res://sprites/personagem_chrono_cookies.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 2 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 9, 14 )
-
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 24.0
 
 [node name="player" type="KinematicBody2D"]
 collision_mask = 4
@@ -65,45 +60,6 @@ script = ExtResource( 3 )
 [node name="colisao_hit_box" type="CollisionShape2D" parent="hit_box"]
 shape = SubResource( 2 )
 
-[node name="arma" type="Node2D" parent="."]
-position = Vector2( 0, -12 )
-
-[node name="espada" type="Sprite" parent="arma"]
-position = Vector2( 0, 4 )
-rotation = -2.61799
-scale = Vector2( 0.9, 0.8 )
-texture = ExtResource( 5 )
-centered = false
-offset = Vector2( -8, -12 )
-
-[node name="mao_direita" type="Sprite" parent="arma/espada"]
-position = Vector2( 5.02691, -0.405025 )
-rotation = -1.5708
-texture = ExtResource( 9 )
-region_enabled = true
-region_rect = Rect2( 2, 15, 6, 6 )
-
-[node name="mao_esquerda" type="Sprite" parent="arma/espada"]
-position = Vector2( -0.409309, 1.78145 )
-rotation = -1.5708
-texture = ExtResource( 9 )
-flip_h = true
-region_enabled = true
-region_rect = Rect2( 2, 15, 6, 6 )
-
-[node name="area_ataque" type="Area2D" parent="arma"]
-visible = false
-collision_layer = 128
-collision_mask = 64
-
-[node name="colisao_area" type="CollisionShape2D" parent="arma/area_ataque"]
-position = Vector2( 16, 0 )
-rotation = 1.5708
-shape = SubResource( 3 )
-
-[node name="posicao_efeito" type="Position2D" parent="arma"]
-position = Vector2( 24, 0 )
-
 [node name="tween_dash" type="Tween" parent="."]
 playback_speed = 10.0
 playback/speed = 10.0
@@ -113,9 +69,10 @@ playback/speed = 10.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/corrida_jogador = ExtResource( 2 )
 anims/idle_personagem = ExtResource( 6 )
+
+[node name="inventario_armas" type="Node2D" parent="."]
 [connection signal="timeout" from="stamina_timer" to="." method="_on_stamina_timer_timeout"]
 [connection signal="timeout" from="cadencia_ataque" to="." method="_on_cadencia_ataque_timeout"]
-[connection signal="area_entered" from="arma/area_ataque" to="." method="_on_area_ataque_area_entered"]
 [connection signal="tween_all_completed" from="tween_dash" to="." method="_on_tween_dash_tween_all_completed"]
 [connection signal="tween_started" from="tween_dash" to="." method="_on_tween_dash_tween_started"]
 [connection signal="tween_completed" from="tween_ataque" to="." method="_on_tween_ataque_tween_completed"]

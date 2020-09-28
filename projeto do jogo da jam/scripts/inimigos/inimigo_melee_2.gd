@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-
+var orientacao = "LATERAL"
 var alvo = self
 var tempo_para_avanco = 3.0
 var velocidade = 1000
@@ -23,27 +23,31 @@ func _ready():
 
 func _process(delta):
 	alvo = self.get_parent().get_node("player")
+	$Sprite/apontador.look_at(alvo.global_position)
+	if alvo.global_position.x < global_position.x:
+		$Sprite.flip_h = true
+	else:
+		$Sprite.flip_h = false
+
+	if orientacao == "LATERAL":
+		$Sprite.play("lateral")
+	else:
+		$Sprite.play("frontal")
 	if congelado:
 		linear_velocity = Vector2(0,0)
 
 
 func _on_Timer_avanco_timeout():
+	print($Timer_avanco.is_stopped())
 	if not congelado:
 		var direcao = (alvo.global_position - self.global_position).normalized() * 500
-		for i in range(0,5):
-			$"Sprite".play("parado")
-			yield($"Sprite", "animation_finished")
-		if direcao.normalized().x > direcao.normalized().y:
-			$Sprite.play("lateral")
-		else:
-			$Sprite.play("frontal")
-		if alvo.global_position.x > global_position.x:
-			$Sprite.flip_h = false
-		else:
-			$Sprite.flip_h = true
+		#for i in range(0,5):
+		$"Sprite".play("parado")
+		yield($"Sprite", "animation_finished")
+		
 		$"area_contato/CollisionShape2D".disabled = false
 		self.linear_velocity = direcao
-	#	self.apply_impulse(Vector2(), direcao * velocidade)
+		#self.apply_impulse(Vector2(), direcao * velocidade)
 
 
 func _on_area_contato_area_entered(area):
@@ -58,3 +62,15 @@ func inimigo_morto(param_saude):
 	#print("inimigo_morto, saude: ", param_saude)
 	emit_signal("morreu")
 	queue_free()
+
+
+func _on_Lateral_area_entered(area):
+	if area.name == "ponta":
+		orientacao = "LATERAL"
+	pass # Replace with function body.
+
+
+func _on_Lateral_area_exited(area):
+	if area.name == "ponta":
+		orientacao = ""
+	pass # Replace with function body.

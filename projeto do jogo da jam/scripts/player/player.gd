@@ -10,44 +10,43 @@ export var stamina = 3
 var direcao = Vector2()
 var velocidade = 200
 var pode_controlar = true
-var ataqueDict = {}
-var FixedComboIndex = -1
-export var comboIndex = 0
-var pode_ataque = true
-var cadencia_ataque = 0.15
 
-var forca_recuo = 60
-var zoom_hit = Vector2(0.05, 0.05)
+var arma_atual = "nada"
+var drop_arma_atual = "nada"
 
-var dano = 30
 
-var pre_efeito = preload("res://scenes/player/efeito_espada.tscn")
-var estado_atual = "negativo"
-var dic_angulo = {"negativo": 300, "positivo": -300}
-var dic_aux = {"negativo": "positivo", "positivo": "negativo"}
+func coletar_loot_arma(param_loot, param_drop):
+	if arma_atual == "nada": #se nao tiver nenhuma arma...
+		var instancia = load(param_loot).instance() #carrega e adiciona a nova arma
+		$"inventario_armas".add_child(instancia)
+		arma_atual = param_loot #define as variaveis das armas e do drop com os endereços das cenas de cada
+		drop_arma_atual = param_drop
+	
+	else: #se o jogador ja tiver alguma arma...
+		$"inventario_armas".get_child(0).queue_free() #apaga o node da arma anteriormente equipada
+		
+		var instancia = load(param_loot).instance() #carrega e adiciona a nova arma
+		$"inventario_armas".add_child(instancia)
+		arma_atual = param_loot #define as variaveis das armas e do drop
+		drop_arma_atual = param_drop
+		
+		var drop = load(drop_arma_atual).instance() #adiciona a cena do loot da arma no YSort
+		drop.global_position = self.global_position
+		self.get_parent().add_child(drop)
 
-signal recuo
-signal zoom
 
 func _ready():
-# warning-ignore:return_value_discarded
-	self.connect("recuo", $"camera_jogador", "camera_recuo")
-# warning-ignore:return_value_discarded
-	self.connect("zoom", $"camera_jogador", "camera_zoom")
 	$"stamina_timer".start()
-	$"arma/area_ataque/colisao_area".disabled = true
 
 # warning-ignore:unused_argument
 func _process(delta):
+	#print($"inventario_armas".get_children())
 	if (get_global_mouse_position() - self.global_position).x >= 0:
 		$"sprite_personagem".flip_h = false
 	else:
 		$"sprite_personagem".flip_h = true
 	movement()
-	$"arma".look_at(get_global_mouse_position()) #mira a arma sempre pro mouse
-	if Input.is_action_just_pressed("attack"):
-		avanco()
-		ataque()
+	
 	if Input.is_action_just_pressed("skill_1"):
 		skill(0)
 	
@@ -56,6 +55,7 @@ func _process(delta):
 
 	if Input.is_action_just_pressed("skill_3"):
 		skill(2)
+
 
 func get_movement_input():
 	direcao.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -106,38 +106,11 @@ func movement():
 		move_and_slide(direcao * velocidade)
 
 
-func avanco():
-	var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-	tween.interpolate_method(self, "move_and_slide",
-	vetor_direcao*200, global_position.normalized(), 1)
-	tween.start()
-
-
-func ataque():
-	if pode_ataque:
-		$"arma/area_ataque/colisao_area".disabled = false
-		var vetor_direcao = (get_global_mouse_position() - self.global_position).normalized()
-		emit_signal("recuo", vetor_direcao, forca_recuo, cadencia_ataque/2)
-		var efeito = pre_efeito.instance()
-		efeito.global_position = $"arma/posicao_efeito".global_position
-		efeito.global_rotation = $"arma/posicao_efeito".global_rotation
-		self.get_parent().add_child(efeito)
-		
-		var rotacao_atual = $"arma/espada".rotation_degrees
-		$"tween_ataque".interpolate_property($"arma/espada", "rotation_degrees", rotacao_atual, rotacao_atual + dic_angulo[estado_atual], cadencia_ataque, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN )
-		$"tween_ataque".start()
-		estado_atual = dic_aux[estado_atual]
-		pode_ataque = false
-		$"cadencia_ataque".start(cadencia_ataque)
-
-
 func _on_stamina_timer_timeout():
 	if stamina < 3:
 		stamina += 1 
 
 
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
 func _on_tween_dash_tween_started(object, key):
 	pode_controlar = false
 	$hit_box/colisao_hit_box.disabled = true
@@ -156,18 +129,3 @@ func jogador_acertado():
 func jogador_morto():
 	#print("jogador_morto")
 	pass
-
-
-func _on_area_ataque_area_entered(area):
-	if area.has_method("hit"):
-		area.hit(dano) #se o jogador acertar o inimigo...
-
-
-func _on_cadencia_ataque_timeout():
-	pode_ataque = true
-
-
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
-func _on_tween_ataque_tween_completed(object, key):
-	$"arma/area_ataque/colisao_area".disabled = true
