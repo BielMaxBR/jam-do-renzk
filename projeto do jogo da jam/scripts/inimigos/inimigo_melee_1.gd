@@ -8,7 +8,7 @@ export var dano = 10 #dano infligido por esse inimigo
 
 signal morreu
 
-export var congelado = false
+
 func _ready():
 	$"area_ataque/CollisionShape2D".disabled = true
 	$"hit_box/CollisionShape2D".disabled = false
@@ -16,11 +16,10 @@ func _ready():
 
 func _process(delta):
 	alvo = self.get_parent().get_node("player") #pega o jogador como alvo
-	if not congelado:
-		if (alvo.global_position - self.global_position).length() >= 50: #distancia entre o jogador e o inimigo
-			movimento_avanco() #avanca pra cima do jogador
-		else:
-			ataque() #ataca o jogador
+	if (alvo.global_position - self.global_position).length() >= 50: #distancia entre o jogador e o inimigo
+		movimento_avanco() #avanca pra cima do jogador
+	else:
+		ataque() #ataca o jogador
 
 
 func movimento_avanco():

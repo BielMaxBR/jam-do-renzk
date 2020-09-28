@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/cenario/main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://sprites/tiles/tile.png" type="Texture" id=5]
 [ext_resource path="res://scenes/Cenario/poste.tscn" type="PackedScene" id=6]
 [ext_resource path="res://o sonho.ogg" type="AudioStream" id=7]
+[ext_resource path="res://scenes/loots/loot_espada_01.tscn" type="PackedScene" id=8]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tile_chao_estagio 2.png 0"
@@ -299,9 +300,14 @@ tile_data = PoolIntArray( 65534, 8, 0, 65535, 8, 1, 0, 8, 1, 1, 8, 1, 2, 8, 1, 3
 
 [node name="YSort" type="YSort" parent="."]
 
+[node name="loot_espada_01" parent="YSort" instance=ExtResource( 8 )]
+position = Vector2( 275.99, 155.35 )
+
 [node name="player" parent="YSort" instance=ExtResource( 2 )]
-process_priority = 1
 position = Vector2( 230.532, 143.701 )
+
+[node name="loot_espada_02" parent="YSort" instance=ExtResource( 8 )]
+position = Vector2( 377.98, 141.743 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -391,12 +397,12 @@ __meta__ = {
 [node name="Area2D" type="StaticBody2D" parent="." groups=[
 "o fim",
 ]]
-position = Vector2( 0, 55.7699 )
+visible = false
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PoolVector2Array( -91.2579, -117.615, 1144.23, -118.119, 1140, 715, -86, 710, -91, -119, -19.2144, -118.674, -21, 624, 1052, 629, 1052.47, -35.4184, -18.6415, -48.388 )
+polygon = PoolVector2Array( 2.07361, -118.119, 1144.23, -118.119, 1140, 715, -86, 710, -91, -119, -18, -119, -21, 624, 1052, 629, 1052.47, -35.4184, 6.38348, -45.1585 )
 
 [node name="postes" type="Position2D" parent="."]
 
