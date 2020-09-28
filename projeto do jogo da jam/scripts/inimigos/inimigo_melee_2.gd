@@ -43,7 +43,7 @@ func _on_Timer_avanco_timeout():
 		var direcao = (alvo.global_position - self.global_position).normalized() * 500
 		#for i in range(0,5):
 		$"Sprite".play("parado")
-		yield($"Sprite", "animation_finished")
+		#yield($"Sprite", "animation_finished")
 		
 		$"area_contato/CollisionShape2D".disabled = false
 		self.linear_velocity = direcao
