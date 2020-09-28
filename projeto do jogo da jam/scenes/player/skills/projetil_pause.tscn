@@ -15,10 +15,12 @@ script = ExtResource( 1 )
 wait_time = 3.0
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 1.44, 0.88 )
+modulate = Color( 0, 0, 1, 1 )
+position = Vector2( -0.166862, 0.33371 )
+scale = Vector2( 2.01641, 2.34832 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 32, 32, 15, 15 )
+region_rect = Rect2( 36.5814, 27.382, 11.5556, 10.2222 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

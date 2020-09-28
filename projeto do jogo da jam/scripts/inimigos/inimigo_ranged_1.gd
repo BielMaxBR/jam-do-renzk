@@ -1,25 +1,27 @@
 extends KinematicBody2D
 
-var alvo = self #self apenas para n ficar Null e poder dar algum erro
-var velocidade = 75 #velocidade com q o inimigo se movimenta
-var pode_atirar = true #cadenciador de ataques
-var cadencia_ataques = 2.0 #tempo entre cada ataque
-export var dano = 10 #dano infligido por esse inimigo
+var alvo = self # self apenas para n ficar Null e poder dar algum erro
+var velocidade = 75 # velocidade com q o inimigo se movimenta
+var pode_atirar = true # cadenciador de ataques
+var cadencia_ataques = 2.0 #t empo entre cada ataque
+export var dano = 10 #d ano infligido por esse inimigo
 var pre_projetil = preload("res://scenes/projeteis/projetil_inmigo_ranged_1.tscn")
 
 signal morreu
 
+export var congelado = false
 
 func _ready():
-	$"hit_box/CollisionShape2D".disabled = false #ativa a hitbox do inimigo
+	$"hit_box/CollisionShape2D".disabled = false
 
 
 func _process(delta):
 	alvo = self.get_parent().get_node("player") #pega o jogador como alvo
-	if (alvo.global_position - self.global_position).length() >= 600: #distancia entre o jogador e o inimigo
-		movimento_avanco() #avanca pra cima do jogador
-	else:
-		tiro() #atira no jogador
+	if not congelado:
+		if (alvo.global_position - self.global_position).length() >= 600: #distancia entre o jogador e o inimigo
+			movimento_avanco() #avanca pra cima do jogador
+		else:
+			tiro() #atira no jogador
 
 
 func movimento_avanco():
@@ -28,28 +30,31 @@ func movimento_avanco():
 
 
 func tiro():
-	#it was in this function that the error occurred...
-	if pode_atirar: #pode_atirar é uma variavel de controle da cadencia
+	if pode_atirar:
 		pode_atirar = false
 		$"AnimationPlayer".play("aviso_ataque_piscada")
 		yield($"AnimationPlayer", "animation_finished")
 		
 		$"AnimationPlayer".play("tiro")
-		var mira = alvo.global_position + Vector2(0, -12) #+altura do sprite, pra mirar pro meio da hitbox do jogador
+		var mira = alvo.global_position + Vector2(0, -12) #+altura do sprite, pra mirar pro meio dele
 		$"arma".look_at(mira)
 		
 		var projetil = pre_projetil.instance()
-		projetil.vetor = Vector2(cos($"arma".global_rotation), sin($"arma".global_rotation)) #vetor é a direcao que o projetil ira seguir
+		projetil.vetor = Vector2(cos($"arma".global_rotation), sin($"arma".global_rotation))
 		projetil.global_rotation = $"arma".global_rotation
 		projetil.global_position = $"arma/Position2D".global_position
-		self.get_parent().add_child(projetil) 
+		self.get_parent().add_child(projetil)
 		
-		yield($"AnimationPlayer", "animation_finished") #espera a animacao do tiro terminar
-		$"cadencia_tiro".start(cadencia_ataques) #inicia o timer da cadencia
+		yield($"AnimationPlayer", "animation_finished")
+		$"cadencia_tiro".start(cadencia_ataques)
 
 
 func _on_cadencia_tiro_timeout():
-	pode_atirar = true #torna possivel atirar outra vez
+	pode_atirar = true
+
+
+func _on_area_ataque_area_entered(area):
+	area.hit(dano)
 
 
 func inimigo_acertado():

@@ -7,5 +7,7 @@ func _ready():
 	yield($AnimationPlayer, "animation_finished")
 	if inimigo != null:
 		self.get_parent().add_child(inimigo)
-	
+	else:
+		#print("variavel do spawn = null")
+		pass
 	self.queue_free()

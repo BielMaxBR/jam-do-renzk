@@ -39,7 +39,7 @@ func ProximaOnda():
 			var inimigo = lista_inimigos[randi()%inimigos_possiveis].instance()
 			inimigo.connect("morreu", self, "inimigo_morreu")
 			spawn.global_position  = Vector2(rand_range(10,1000),rand_range(10,550))
-#			inimigo.global_position = spawn.global_position
+			inimigo.global_position = spawn.global_position
 			spawn.inimigo = inimigo
 			$"YSort".add_child(spawn)
 		pass
