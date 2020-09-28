@@ -9,8 +9,6 @@ func _ready():
 
 
 func _process(delta):
-	if global_position.x < 0 or global_position.x > 2000 or global_position.y < 0 or global_position.y > 1000:
-		queue_free()
 	translate(vetor * velocidade * delta)
 
 
